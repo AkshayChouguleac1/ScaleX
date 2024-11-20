@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { UploadService } from './upload.service';
 
 @Component({
   selector: 'app-upload-excel',
@@ -7,26 +8,25 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./upload-excel.component.css']
 })
 export class UploadExcelComponent implements OnInit{
-  uploadExcelForm!:FormGroup;
-  uploadedExcel!:any[];
-  excelFormObj!:Object;
-  constructor(){}
+  selectedFile!:File;
+  uploaderEmaill!:string;
+  constructor(private uploadService:UploadService){}
 
   ngOnInit(): void {
-    this.uploadExcelForm = new FormGroup({
-      uploader:new FormControl("",Validators.email),
-      uploadedFile:new FormControl()
-    })
   }
 
   uploadExcelFile(event:any){
-    this.excelFormObj={'uploader':this.uploadExcelForm.get('uploader')?.value,"uploadedFile":this.uploadedExcel};
-    this.uploadedExcel=event.target.value;
-    this.uploadExcelForm.get('uploadedFile')?.setValue(this.uploadedExcel)
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+    }
   }
 
   toUploadExcel(){
-    console.log(this.uploadExcelForm.value)
+    const formData = new FormData();
+    formData.append('uploader',this.uploaderEmaill);
+    formData.append('file', this.selectedFile, this.selectedFile.name);
+    this.uploadService.uploadExcel(formData);
   }
 
 }

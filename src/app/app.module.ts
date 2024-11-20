@@ -6,19 +6,23 @@ import { AppComponent } from './app.component';
 import { UploadExcelComponent } from './upload-excel/upload-excel.component';
 import {ReactiveFormsModule} from '@angular/forms';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from  '@angular/common/http';
+import { BiomassListComponent } from './biomass-list/biomass-list.component';
 
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    UploadExcelComponent
+    UploadExcelComponent,
+    BiomassListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
